@@ -1,53 +1,93 @@
-# Ex 5(C) Depth First Graph
-## DATE: 25/04/2025
+# Ex 5(D) Topological Sort
+## DATE: 30/04/2025
 ## AIM:
-To compose the code for the function createNode to traverse the graph below in the depth first fashion.
+To compose the code to determine whether the topological ordering for the following graph is possible or not.
 
-![image](https://github.com/user-attachments/assets/63552824-d0a3-49c6-a473-6db27d1f03e4)
+![image](https://github.com/user-attachments/assets/c74a7111-9b59-475c-aad4-9baf23d50ec0)
+
 
 ## Algorithm
 1. Start 
-2. Allocate memory for a new node. 
-3. Set the vertex field of the new node to the given value v. 
-4. Set the next pointer of the new node to NULL. 
-5. Return the newly created node. 
-6. End
+2. Create the graph using create_graph() function. 
+3. Calculate the indegree for each vertex. If the indegree is 0, insert the vertex into the queue. 
+4. Initialize count to 0 and begin processing vertices from the queue. 
+5. Dequeue a vertex, add it to the topo_order array, and remove all its outgoing edges. 
+6. For each adjacent vertex, decrease its indegree. If the indegree becomes 0, enqueue it. 
+7. If there is a cycle (i.e., not all vertices are processed), print an error message and exit. 
+8. Print the vertices in topological order. 
+9. End
 
 ## Program:
 ```
 /*
-Program to traverse the graph below in the depth first fashion
+Program to determine whether the topological ordering for the following graph is possible or not
 Developed by: DIVYA E
 RegisterNumber: 212223230050
 */
-/*#include <stdio.h> 
-#include <stdlib.h> 
-struct node { 
-int vertex; 
-struct node* next; 
-}; 
-struct node* createNode(int v); 
-struct Graph { 
-int numVertices; 
-int* visited; 
-// We need int** to store a two dimensional array. 
-// Similary, we need struct node** to store an array of Linked lists 
-struct node** adjLists; 
-};*/ 
-struct node* createNode(int v) { 
-struct node* newNode=malloc(sizeof(struct node)); 
+PROGRAM : 
+//#include<stdio.h> 
+//#include<stdlib.h> 
+//#define MAX 5 
+ 
+//int n; /*Number of vertices in the graph*/ 
+//int adj[MAX][MAX]; /*Adjacency Matrix*/ 
+//void create_graph(); 
+ 
+//int queue[MAX], front = -1,rear = -1; 
+//void insert_queue(int v); 
+//int delete_queue(); 
+//int isEmpty_queue(); 
+//int indegree(int v); 
+int main() 
   
   
-newNode->vertex=v; 
-newNode->next=NULL; 
-return newNode; 
+{ 
+int i,v,count,topo_order[MAX],indeg[MAX]; 
+create_graph(); 
+/*Find the indegree of each vertex*/ 
+for(i=0;i<n;i++) 
+{ 
+indeg[i] = indegree(i); 
+if( indeg[i] == 0 ) 
+insert_queue(i); 
 } 
+ 
+count = 0; 
+ 
+while( !isEmpty_queue( ) && count < n ) 
+{ 
+v = delete_queue(); 
+topo_order[++count] = v; /*Add vertex v to topo_order array*/ 
+/*Delete all edges going from vertex v */ 
+for(i=0; i<n; i++) 
+{ 
+if(adj[v][i] == 1) 
+{ 
+adj[v][i] = 0; 
+indeg[i] = indeg[i]-1; 
+if(indeg[i] == 0) 
+insert_queue(i); 
+} 
+} 
+} 
+if( count < n ) 
+{ 
+printf("No topological ordering possible, graph contains cycle\n"); 
+exit(1); 
+} 
+printf("Vertices in topological order are :\n"); 
+for(i=1; i<=count; i++) 
+printf( "%d ",topo_order[i] ); 
+printf("\n"); 
+ 
+return 0; 
+}/*End of main()*/
 ```
 
 ## Output:
-![image](https://github.com/user-attachments/assets/36f4ec5f-7756-49c1-9ece-6085c90bdba6)
+![image](https://github.com/user-attachments/assets/7f4ed3fb-0952-46c4-bffc-3ab063ceab04)
 
 
 
 ## Result:
-Thus, the C code for the function createNode to traverse the graph below in the depth first fashion is implemented successfully
+Thus, the C program for determining whether the topological ordering for the following graph is possible or not, is implemented successfully.
